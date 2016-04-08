@@ -1,0 +1,76 @@
+.content {
+  background: #fff;
+}
+.writeContainer {
+  margin: 70px auto;
+  padding: 20px
+}
+.writeContainerFull{
+  margin-top: 50px;
+}
+.wirteButton {
+  background: #FFF;
+  top: 70px;
+  min-height: 50px;
+  width: 100%;
+  z-index: 100;
+  border-bottom: 1px solid #ECE8E8;
+  transition: all .3s ease-in-out;
+  position: relative;
+  height: 50px;
+  box-sizing: border-box;
+}
+.writeButtonFull {
+  top: 0;
+  position: fixed;
+}
+.ctrl {
+  font-size: 14px;
+  display: inline-block;
+  text-align: center;
+  padding: 15px 24px;
+}
+.ctrlBtn {
+  float: right;
+  margin: 5px 10px 0 0;
+}
+.words {
+  font-size: 13px;
+}
+.authorInfo {
+  margin-bottom: 50px;
+}
+.authorInfo span {
+  position: relative;
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 12px;
+  top: 10px;
+}
+.authorImg {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  float: left;
+}
+.textareaTitle {
+  width: 100%;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 40px;
+  word-wrap: break-word;
+}
+.textareaTitleFull {
+  width: 100%;
+}
+.textareaContent {
+  width: 100%;
+  min-height: 400px;
+  word-wrap: break-word;
+  font-size: 16px;
+  font-weight: 400;
+  color: #546e7a;
+}
+.textareaContentFull {
+  width: 100%;
+}

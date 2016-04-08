@@ -1,0 +1,5 @@
+/* 此文件及import导入的文件不会被css modules化 */
+@import '~skeleton-scss/scss/skeleton';
+@import 'animate.css';
+@import 'github-markdown-css/github-markdown.css';
+@import 'theme';

@@ -1,0 +1,50 @@
+.container {
+  // compose: from '../styles/global.scss' box;
+  min-height: 80px;
+  background: #fff;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.create, .share {
+  text-align: center;
+  line-height: 50px;
+  width: 50%;
+  height: 100%;
+  padding: 16px 0;
+  color: #6e6b6b;
+  float: left;
+  cursor: pointer;
+  transition: all .3s;
+  box-sizing: border-box;
+  &:hover {
+    background-color: #E6E6E6;
+  }
+}
+
+.create {
+  border-radius: 2px 0 0 0;
+  border-right: 1px solid #E4E2E2;
+}
+.share {
+  border-radius: 0 2px 0 0s;
+}
+
+.createIcon, .shareIcon {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 10px;
+  span {
+    color: #fff;
+  }
+}
+
+.createIcon {
+  background-color: #009688;
+}
+
+.shareIcon {
+  background-color: #00bcd4;
+}

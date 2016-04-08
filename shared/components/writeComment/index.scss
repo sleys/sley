@@ -1,0 +1,33 @@
+.writeContainer {
+  margin: 20px 0  40px 0;
+  position: relative;
+}
+.text {
+  color: #444;
+}
+.commentTextarea {
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 160px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: all .4s;
+}
+.submit {
+  position: relative;
+  top: -45px;
+  left: -10px;
+  float: right;
+  height: 40px;
+}
+.info {
+  color: #ccc;
+  font-size: 13px;
+}
+.words {
+  color: #888;
+}
+.success {
+  background-color: #3BCC96 !important;
+  border-color: #3BCC96 !important;
+}

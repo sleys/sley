@@ -1,0 +1,74 @@
+.postCard {
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  margin-top: 25px;
+  position: relative;
+}
+.contentTitle {
+  color: #444;
+  letter-spacing: 0.1px;
+  font-weight: 400;
+}
+.postContent {
+  padding: 0 20px;
+  margin-bottom: 25px;
+  word-break: break-word;
+}
+.postContent > h2 {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+.footer {
+  height: 55px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ECEFF1;
+  background-color: #FAFAFA;
+}
+.postActions {
+  list-style: none;
+}
+.postActions > li {
+  float: left;
+}
+.postActions > li > a {
+  color: #546E7A;
+  border-radius: 2px;
+  transition: all .1s ease;
+  font-size: 14px;
+  line-height: 30px;
+  margin:0 10px;
+  display: block;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+}
+.postActions:hover {
+  color: #A0A0A0;
+}
+.views {
+  margin: 0 5px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 14px;
+  color: #78909C;
+}
+.comment {
+  border: none !important;
+}
+.red, .black {
+  color: #C74980;
+  animation-duration: .3s;
+}
+.black {
+  color: #505050;
+}
+
+.commentList {
+  padding: 5px;
+}
+.noComment {
+  padding: 20px;
+}

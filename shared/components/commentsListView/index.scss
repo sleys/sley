@@ -1,0 +1,14 @@
+.commentListView {
+  margin-top: 20px;
+}
+.commentInfo {
+  padding: 5px;
+  text-align: center;
+  background: #fff;
+  margin: 15px 0;
+  cursor: pointer;
+  transition: all .3s;
+  &:hover {
+    background-color: #EFEFEF;
+  }
+}

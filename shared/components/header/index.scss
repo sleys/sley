@@ -1,0 +1,96 @@
+.header {
+  height: 70px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  position: fixed;
+  background: #FFF;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0,0,0,0.075);
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  width: 100%;
+  z-index: 500;
+  top: 0;
+  left: 0;
+  transition: all .3s ease-in-out;
+  animation-duration: .5s;
+}
+.headerWarp {
+  max-width: 75rem;
+  margin: 0 auto;
+}
+.logo {
+  float: left;
+  line-height: 48px;
+  font-weight: 600;
+  color: #12bd9a;
+  text-decoration: none;
+}
+.logo > img {
+  width: 200px;
+  height: 48px;
+}
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 3px #6D6D6D;
+  margin-top: 2px;
+  -webkit-user-select: none;
+}
+.nav {
+  list-style: none;
+}
+.nav > li > a {
+  display: block;
+  float: left;
+  line-height: 48px;
+  margin-left: 10px;
+}
+.headerList {
+  list-style: none;
+  float: right !important;
+  & > li > a {
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    box-sizing: border-box;
+    line-height: 50px;
+    transition: all .1s;
+    &:hover {
+      border-radius: 50%;
+      background-color: #E4E4E4;
+    }
+  }
+}
+.headerList > li, .authAction {
+  display: block;
+  line-height: 50px;
+  float: left;
+  margin: 0 10px 0 5px;
+}
+.authAction small {
+  font-size: 1.1rem;
+  color: #A2A2A2;
+}
+.userAction {
+  width: 100px;
+  list-style: none;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  margin: -6px 0 7px -20px;
+  border-radius: 0 0 3px 3px;
+}
+.userAction > li a {
+  display: block;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  transition: all .3s;
+  color: #615757;
+}
+.userAction > li a:hover {
+  background-color: #ebe6e6;
+  color: #404040;
+}

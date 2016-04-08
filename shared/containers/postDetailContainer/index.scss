@@ -1,0 +1,86 @@
+.container {
+  border-bottom: rgb(243, 243, 243) solid 1px;
+  padding: 20px 0 20px 10px;
+  background-color: #fff;
+}
+.titleContent {
+  min-height: 65px;
+  padding: 5px;
+}
+.title {
+  font-size: 2em;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: #444;
+  letter-spacing: 0;
+}
+.in {
+  font-size: 16px;
+  margin-bottom: 1rem;
+}
+.vote {
+  transition: all .1s ease;
+  cursor: pointer;
+}
+.liked, .downd {
+  animation-duration: .3s;
+}
+.liked {
+  color: #C74980;
+}
+.downd {
+  color: #505050;
+}
+.fromNow {
+  font-size: 13px
+}
+.authorHead {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  float: left;
+}
+.authorName {
+  padding: 10px 0 0 10px;
+  font-size: 17px;
+  font-weight: 400;
+  float: left;
+}
+.followAuthor, .markPost {
+  float: right;
+}
+.markPost {
+  margin-left: 5px;
+}
+.postInfo {
+  clear: both;
+  color: #999;
+  font-size: 14px;
+  padding-top: 10px;
+}
+.postMarkNum, .viewNum {
+  color: rgb(79, 79, 83);
+  padding: 0 4px;
+}
+.postInfoNum {
+  position: relative;
+  top: 10px;
+}
+.postDetailInfo {
+  font-size: 13px;
+  li {
+    float: left;
+    padding: 0 10px;
+  }
+}
+.detailView {
+  margin: 0 auto;
+}
+.commentNum {
+  font-size: 14px;
+  color: rgb(190, 190, 190);
+}
+.commentView {
+  width: 700px;
+  margin: 30px auto 0 auto;
+}

@@ -1,0 +1,61 @@
+.commentView {
+  margin: 15px 0;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  word-break: break-word;
+  overflow: auto;
+  transition: all .3s;
+}
+.replyIng {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.header {
+  padding: 10px 10px 0 10px;
+  height: 50px;
+}
+.commentHead {
+  display: table-cell;
+  img {
+    border-radius: 50%;
+  }
+}
+.commentUserInfo {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 10px;
+}
+.createTime {
+  font-size: 13px;
+}
+.commentContent {
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+.footer {
+  overflow: auto;
+}
+.footerList {
+  & > li {
+    display: block;
+    float: left;
+    margin: 0 5px;
+  } 
+  & > li > a {
+    font-size: 14px;
+    padding: 3px;
+    margin: 5px;
+    height: 30px;
+    /* overflow: hidden; */
+    line-height: 30px;
+  }
+}
+.footerListR {
+  @extend .footerList;
+  & > li {
+    float: right;
+    height: 30px;
+  } 
+}
+.reply {
+  
+}

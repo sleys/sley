@@ -1,0 +1,21 @@
+:global .content {
+  margin: 100px auto;
+}
+:global .content-s {
+  margin: 70px auto;
+  margin-bottom: 20px;
+}
+:global .row {
+  max-width: 75rem;
+}
+:global .hide {
+  display: none !important;
+}
+:global .show {
+  display: none !important;
+}
+:global .box {
+  background: #fff;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
