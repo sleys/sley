@@ -29,6 +29,7 @@ const Html = (props) => {
     </html>
   )
 }
+
 Html.propTypes = {
   assets: Types.object,
   component: Types.element.isRequired,
