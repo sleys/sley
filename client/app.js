@@ -7,7 +7,7 @@ import { Router, browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from 'redux/store'
 import createRoutes, { matchLocation } from 'routes'
-import Devtools from 'components/devtools'
+
 const dest = document.getElementById('app')
 const store = configureStore(browserHistory, window.__INIT__STATE__)
 const history = syncHistoryWithStore(browserHistory, store, {
@@ -30,6 +30,7 @@ history.listen(location => {
       dispatch: store.dispatch,
       getState: store.getState
     }
+
     // Don't fetch data for initial route, server has already done the work:
     if (window.__INIT__STATE__) {
       // Delete initial data so that subsequent data fetches can occur:
@@ -57,6 +58,7 @@ if (__DEVELOPMENT__) {
 }
 
 if (__DEVTOOLS__ && !window.devToolsExtension) {
+  const Devtools = require('components/devtools')
   render(
     <Provider store={store} key='provider'>
       <div>
