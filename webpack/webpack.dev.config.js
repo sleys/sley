@@ -34,7 +34,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('development')
       },
       __CLIENT__: true,
-      __SERVER__: false,
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true
     })
@@ -74,12 +73,12 @@ module.exports = {
       },
       {
         test: /main\.scss/,
-        loaders: ['style', 'css', 'postcss', 'sass']
+        loaders: ['style', 'css', 'postcss', 'sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true']
       },
       {
         test: /\.scss$/,
         exclude: /node_modules|main.scss/,
-        loaders: ['style', 'css?modules&localIdentName=[name]__[local]___[hash:base64:5]', 'postcss', 'sass']
+        loaders: ['style', 'css?modules&localIdentName=[name]__[local]___[hash:base64:5]', 'postcss', 'sass?outputStyle=expanded&sourceMap']
       },
       { test: /\.(png|jpg|jpeg|gif)$/,
         loader: 'url-loader?limit=10000'
@@ -89,16 +88,20 @@ module.exports = {
         loader: 'url?limit=10000&mimetype=application/font-woff'
       },
       {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/font-woff'
       },
       {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=application/octet-stream'
       },
       {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file'
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&mimetype=image/svg+xml'
       }
     ]
   }
