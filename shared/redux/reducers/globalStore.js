@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import { handleActions } from 'redux-actions'
-import config from 'config/client'
 
 import {
   SHOW_HEADER,
@@ -10,7 +9,6 @@ import {
 } from 'redux/constants/global'
 
 const initialState = Immutable.fromJS({
-  ...config,
   showHeader: true,
   showLoginModal: false
 })

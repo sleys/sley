@@ -5,14 +5,14 @@ import staticCache from 'koa-static-cache'
 import convert from 'koa-convert'
 import compress from 'koa-compress'
 import React from 'react'
+import Helmet from 'react-helmet'
 import { trigger } from 'redial'
-import { renderToString } from 'react-dom/server'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { RouterContext, createMemoryHistory } from 'react-router'
 import { Provider } from 'react-redux'
 import createRoutes, { matchLocation } from 'routes'
 import configureStore from 'redux/store'
-import Html from 'html'
 import {
   loadUserInfo
 } from 'redux/actions/user'
@@ -27,6 +27,35 @@ app.use(compress())
 app.use(convert(staticCache(path.resolve(__dirname, '..', 'static'), {
   maxAge: 30 * 24 * 60 * 60
 })))
+
+const renderFullPage = (html, initialState, assets) => {
+  let cssPath = ''
+  let jsPath = 'http://localhost:4001/dist/js/bundle.js'
+  if (!__DEVELOPMENT__) {
+    cssPath = `<link rel='stylesheet' href='${assets.app.css}' />`
+    jsPath = assets.app.js
+  }
+  const head = Helmet.rewind()
+  return `
+    <!doctype html>
+    <html>
+      <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        ${head.title}
+        ${head.meta}
+        ${cssPath}
+      </head>
+      <body>
+        <div id='app'>
+          ${html}
+        </div>
+        <script>window.__INIT__STATE__ = ${JSON.stringify(initialState)};</script>
+        <script src='${jsPath}'></script>
+      </body>
+    </html>
+  `
+}
 
 app.use(async (ctx) => {
   const location = ctx.url
@@ -48,6 +77,7 @@ app.use(async (ctx) => {
       ctx.redirect(redirect.pathname + redirect.search)
     } else if (!renderProps) {
       ctx.status = 500
+      renderFullPage(null, null, assetsFile)
       console.error('no renderProps')
     } else {
       const { components } = renderProps
@@ -60,13 +90,13 @@ app.use(async (ctx) => {
         getState: store.getState
       }
       await trigger('fetch', components, locals)
-      const component = (
+      const initialView = renderToStaticMarkup(
         <Provider store={store} key='provider'>
           <RouterContext {...renderProps} />
         </Provider>
       )
-      const html = '<!doctype html>\n' + renderToString(<Html store={store} component={component} assets={assetsFile} />)
-      ctx.body = html
+      const finalState = store.getState().toJS()
+      ctx.body = renderFullPage(initialView, finalState, assetsFile)
     }
   } catch (e) {
     ctx.status = 500
@@ -75,7 +105,7 @@ app.use(async (ctx) => {
   }
 })
 
-app.listen(3000, 'localhost', () => {
+app.listen(2333, 'localhost', () => {
   console.log('listen port is 3000')
 })
 

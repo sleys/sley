@@ -8,6 +8,7 @@ try {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Helmet from 'react-helmet'
+import config from 'config'
 import Header from 'components/header'
 import GoTop from 'components/goTop'
 import {
@@ -22,8 +23,7 @@ class RootContainer extends Component {
   render () {
     return (
       <div>
-        <Helmet title=''
-                titleTemplate='%s - sley.com' />
+        <Helmet {...config.app.head} />
         <Header key={0} />
         <div>
           {this.props.children}

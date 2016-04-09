@@ -1,10 +1,9 @@
 import React, { Component, PropTypes as Types } from 'react'
-import { renderToString } from 'react-dom/server'
+
 import Helmet from 'react-helmet'
 
 const Html = (props) => {
   const {assets, component, store} = props
-  const content = renderToString(component)
   const head = Helmet.rewind()
   return (
     <html>
