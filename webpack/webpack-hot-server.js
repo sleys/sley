@@ -11,9 +11,10 @@ const port = 4001
 
 const options = {
   contentBase: 'http://' + host + ':' + port,
-  quiet: false,
+  quiet: true,
   noInfo: true,
   hot: true,
+  inline: true,
   lazy: false,
   publicPath: webpackConfig.output.publicPath,
   headers: {
@@ -22,10 +23,6 @@ const options = {
   stats: {
     colors: true
   }
-  // proxy: {
-  //   "/api/*": "http://localhost:3000/api",
-  //   "/*.*": "http://localhost:3000"
-  // }
 }
 
 const server = new Koa()

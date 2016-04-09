@@ -24,7 +24,7 @@ const hook = require('css-modules-require-hook')
 hook({
   devMode: __DEVELOPMENT__,
   extensions: ['.scss'],
-  generateScopedName: '[name]__[local]___[hash:base64:5]'
+  generateScopedName: __DEVELOPMENT__ ? '[name]__[local]___[hash:base64:5]' : '[hash:base64]'
 })
 
 if (__DEVELOPMENT__) {

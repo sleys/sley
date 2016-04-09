@@ -8,8 +8,7 @@ const projectPath = path.resolve(__dirname, '../')
 const assestPath = path.resolve(projectPath, './static/dist')
 
 module.exports = {
-  // devtool: 'cheap-module-eval-source-map',
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   target: 'web',
   debug: true,
   progress: true,

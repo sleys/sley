@@ -15,7 +15,10 @@ module.exports = {
   debug: false,
   context: path.resolve(__dirname, '..'),
   entry: {
-    app: ['babel-polyfill', './client/app.js']
+    app: [
+      'babel-polyfill',
+      './client/app.js'
+    ]
   },
   output: {
     path: assestPath,
