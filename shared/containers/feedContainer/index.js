@@ -7,6 +7,9 @@ import {
   VelocityTransitionGroup
 } from 'velocity-react'
 import {
+  similarYou
+} from 'redux/actions/user'
+import {
   loadMyFeed
 } from 'redux/actions/posts'
 import LifeSidebar from 'components/leftSidebar'
@@ -23,6 +26,17 @@ import WelcomeContainer from 'containers/welcomeContainer'
     if (getState().getIn(['UserStore', 'logind'])) {
       const { page } = getState().get('routing').locationBeforeTransitions.query
       return dispatch(loadMyFeed(page))
+    }
+  },
+  defer: ({dispatch, getState}) => {
+    // feed 页面比较特殊，没有登录就显示welcome页面，所以只能单独做权限验证
+    if (getState().getIn(['UserStore', 'logind'])) {
+      // 如果没有加载过feed则请求
+      if (!getState().getIn(['PostStore', 'loaded'])) {
+        const { page } = getState().get('routing').locationBeforeTransitions.query
+        dispatch(loadMyFeed(page))
+      }
+      return dispatch(similarYou())
     }
   }
 })
@@ -76,7 +90,7 @@ class FeedContainer extends PureComponent {
             </div>
           </div>
           <div className='three columns animated fadeIn'>
-            <DiscoverPeople />
+            <DiscoverPeople users={this.props.similarUser} />
           </div>
         </div>
       </div>
@@ -89,6 +103,7 @@ FeedContainer.propTypes = {
   loading: Types.bool,
   loadingNext: Types.bool.isRequired,
   data: Types.array.isRequired,
+  similarUser: Types.array,
   logind: Types.bool.isRequired
 }
 
@@ -100,6 +115,7 @@ const select = (state) => {
     loading: posts.get('loading'),
     loadingNext: posts.get('loadingNext'),
     data: posts.get('data').toArray(),
+    similarUser: state.getIn(['UserStore', 'similar']).toArray(),
     logind: state.getIn(['UserStore', 'logind'])
   }
 }

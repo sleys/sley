@@ -62,6 +62,7 @@ app.use(async (ctx) => {
   const token = ctx.cookies.get('token')
   const memoryHistory = createMemoryHistory(location)
   const store = configureStore(memoryHistory)
+
   // sync History to Store
   syncHistoryWithStore(memoryHistory, store, {
     selectLocationState: (state) => state.get('routing')
@@ -76,9 +77,9 @@ app.use(async (ctx) => {
     if (redirect) {
       ctx.redirect(redirect.pathname + redirect.search)
     } else if (!renderProps) {
-      ctx.status = 500
-      renderFullPage(null, null, assetsFile)
-      console.error('no renderProps')
+      ctx.body = renderFullPage('', store.getState().toJS(), assetsFile)
+      console.error(`Error: no renderProps url:${location}`)
+      return
     } else {
       const { components } = renderProps
       const locals = {
@@ -99,13 +100,14 @@ app.use(async (ctx) => {
       ctx.body = renderFullPage(initialView, finalState, assetsFile)
     }
   } catch (e) {
-    ctx.status = 500
-    ctx.body = 'error'
-    throw e
+    console.error(`Error: MatchLocation error`)
+    console.error(e)
+    ctx.body = renderFullPage('', store.getState().toJS(), assetsFile)
+    return
   }
 })
 
-app.listen(2333, 'localhost', () => {
+app.listen(3000, 'localhost', () => {
   console.log('listen port is 3000')
 })
 

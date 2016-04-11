@@ -8,18 +8,30 @@ try {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Helmet from 'react-helmet'
+import { provideHooks } from 'redial'
+import cookie from 'react-cookie'
 import config from 'config'
 import Header from 'components/header'
 import GoTop from 'components/goTop'
 import {
   hideLoginModal
 } from 'redux/actions/global'
+import {
+  loadUserInfo
+} from 'redux/actions/user'
 import LoginModal from 'modals/loginModal'
 
-class RootContainer extends Component {
-  constructor (props) {
-    super(props)
+
+@provideHooks({
+  defer: ({dispatch, getState}) => {
+    if (getState().getIn(['UserStore', 'logind'])) return
+    const token = cookie.load('token')
+    if (token) {
+      return dispatch(loadUserInfo(token))
+    }
   }
+})
+class RootContainer extends Component {
   render () {
     return (
       <div>
