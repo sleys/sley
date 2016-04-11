@@ -75,8 +75,19 @@ export const loadUserInfo = (token) => {
   }
 }
 
-export const similarYou = (user_id) => {
-  return fetchSimilarYou(user_id)
+// load similarYou
+export const similarYou = () => {
+  return (dispatch, getState) => {
+    const token = getState().getIn(['UserStore', 'token'])
+    return fetchSimilarYou(token).then(({response: {users}}) => {
+      dispatch({
+        type: 'LOAD_SIMILAR_SUCCESS',
+        users
+      })
+    }).catch((e) => {
+      console.error(e)
+    })
+  }
 }
 
 export const logout = () => {

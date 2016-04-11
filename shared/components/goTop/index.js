@@ -13,7 +13,7 @@ class GoTop extends Component {
   }
   render () {
     return (
-      <Headroom tolerance={5} classes={{
+      <Headroom tolerance={0} classes={{
         initial: 'animated',
         pinned: 'fadeIn',
         unpinned: 'fadeOut'

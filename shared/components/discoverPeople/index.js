@@ -1,7 +1,7 @@
 import React, { Component, PropTypes as Types } from 'react'
 import Icon from 'react-fa'
-import { Link } from 'react-router'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import {
   similarYou
 } from 'redux/actions/user'
@@ -9,37 +9,16 @@ import FollowUser from 'components/followUser'
 import styles from './index.scss'
 
 class DiscoverPeople extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      users: []
-    }
-  }
-  fetchUser () {
-    if (this.state.fetchIng) return
-    this.setState({
-      fetchIng: true
-    })
-    this.props.similarYou(this.props.token).then(({response: {users}}) => {
-      this.setState({
-        fetchIng: false,
-        users: users
-      })
-    })
-  }
-  componentDidMount () {
-    this.fetchUser()
-  }
   render () {
     return (
       <div className={styles.sidebarWeiget}>
         <p>
           Maybe your like
-          <a onClick={this.fetchUser.bind(this)} className='u-pull-right'>
-            {this.state.fetchIng ? 'loading' : <Icon name='refresh'/>}
+          <a className='u-pull-right' onClick={() => this.props.dispatch(similarYou())}>
+            <Icon name='refresh'/>
           </a>
         </p>
-        {this.state.users.map((k, i) => {
+        {this.props.users.map((k, i) => {
           return (
             <div className={styles.peopleCard} key={i}>
               <a href='#' className={styles.peoplePhoto}>
@@ -58,19 +37,12 @@ class DiscoverPeople extends Component {
 }
 
 DiscoverPeople.propTypes = {
-  token: Types.string.isRequired,
-  similarYou: Types.func.isRequired
+  users: Types.array,
+  dispatch: Types.func.isRequired
 }
 
 const select = (state) => {
-  return {
-    token: state.getIn(['UserStore', 'token'])
-  }
+  return {}
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    similarYou
-  }
-}
-export default connect(select, mapDispatchToProps)(DiscoverPeople)
+export default connect(select)(DiscoverPeople)

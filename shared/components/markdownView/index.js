@@ -15,7 +15,8 @@ class MarkdownView extends Component {
     })
     return (
       <div className={c}
-           dangerouslySetInnerHTML={renderMarkdownPerview(this.props.content)}/>
+           dangerouslySetInnerHTML={renderMarkdownPerview(this.props.content)}
+           {...this.props}/>
     )
   }
 }

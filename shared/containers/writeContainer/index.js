@@ -91,7 +91,12 @@ class WriteContainer extends Component {
     this.setState({
       createIng: true
     })
-    this.props.newPost(this.state.write, (e) => {
+    const post = {
+      ...this.state.write,
+      title: _.trim(this.state.write.title),
+      content: _.trim(this.state.write.content)
+    }
+    this.props.newPost(post, (e) => {
       if (!e) {
         localStorage.removeItem('post_save')
         this.setState({
@@ -101,8 +106,8 @@ class WriteContainer extends Component {
     })
   }
   onTitleChange (e) {
-    const maxLen = 300
-    const value = _.trimRight(e.target.value)
+    const maxLen = 150
+    const value = e.target.value
     if (value.length > maxLen) {
       const d = value.slice(0, maxLen)
       this.setState({
@@ -121,7 +126,7 @@ class WriteContainer extends Component {
     }
   }
   onContentChange (e) {
-    const maxLen = 20000 // 5000字数限制
+    const maxLen = 20000 // 20000字数限制
     const value = e.target.value
     if (value.length > maxLen) {
       const d = value.slice(0, maxLen)
@@ -155,9 +160,6 @@ class WriteContainer extends Component {
     }
   }
   render () {
-    const content = cls({
-      [styles.content]: true
-    })
     const titleClass = cls({
       'auto-size': true,
       [styles.textareaTitle]: true,
@@ -177,7 +179,7 @@ class WriteContainer extends Component {
       [styles.writeButtonFull]: this.state.full
     })
     return (
-      <div>
+      <div className={styles.bg}>
         <Helmet title='Write'/>
         <div className={wb}>
           <div className='column'>
@@ -204,7 +206,7 @@ class WriteContainer extends Component {
             <img className={styles.authorImg} src={this.props.user.avatarUrl} />
             <span>{this.props.user.nickname}</span>
           </div>
-          <div>
+          <div className={styles.titleWrap}>
             <Textarea className={titleClass}
                       placeholder='Title'
                       useCacheForDOMMeasurements
@@ -212,7 +214,7 @@ class WriteContainer extends Component {
                       value={this.state.write.title}
                       onChange={this.onTitleChange}/>
           </div>
-          <div style={{marginTop: '25px'}}>
+          <div>
             <Textarea className={contentClass}
                       useCacheForDOMMeasurements
                       placeholder='Say you want to say'

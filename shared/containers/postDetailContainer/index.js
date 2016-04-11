@@ -78,10 +78,10 @@ class PostContainer extends Component {
       this.props.down(post._id)
     }
   }
-  renderPost () {
+  renderHeader () {
     if (this.props.loading) {
       return (
-        <div className='content-s container'>
+        <div>
           loading
         </div>
       )
@@ -102,64 +102,61 @@ class PostContainer extends Component {
       'animated': true
     })
     return (
-      <div style={{background: '#fff'}}>
-        <div className={'content-s container ' + styles.container}>
-          <div className='eight columns'>
-            <div className={styles.titleContent}>
-              <Link to={`/post/${post._id}`}>
-                <h1 className={styles.title}>{post.title}</h1>
-              </Link>
-            </div>
-            <ul className={'innerList ' + styles.postDetailInfo}>
-              <li className={styles.fromNow}>
-                <Icon name='pencil' />{' '}
-                {moment(post.create_time).fromNow()} in <a>javscript</a>
-              </li>
-              <li>
-                <a className={styles.vote} onClick={this.onLike.bind(this, post)}>
-                  <Icon name={likeName} /> {post.like}
-                </a>
-              </li>
-              <li>
-                <a className={styles.vote} onClick={this.onDown.bind(this, post)}>
-                  <Icon name={downName} /> {post.down}
-                </a>
-              </li>
-            </ul>
+      <div className={'content-s container ' + styles.container}>
+        <div className='eight columns'>
+          <div className={styles.titleContent}>
+            <Link to={`/post/${post._id}`}>
+              <h1 className={styles.title}>{post.title}</h1>
+            </Link>
           </div>
-          <div className='four columns'>
-            <ul className='innerList'>
-              <li>
-                <img src={post.author.avatarUrl} alt='' className={styles.authorHead} />
-                <p className={styles.authorName}>{post.author.nickname}</p>
-                {this.props.user._id !== post.author._id && <FollowUser className={'radius ' + styles.markPost} userInfo={post.author} />}
-              </li>
-              <li className={styles.postInfo}>
-                <span className={styles.postInfoNum}>
-                  <span className={styles.postMarkNum}>0</span>收藏,
-                  <span className={styles.viewNum}> {post.views}</span>浏览
-                </span>
-                <button className={'radius ' + styles.markPost}>收藏</button>
-              </li>
-            </ul>
-          </div>
+          <ul className={'innerList ' + styles.postDetailInfo}>
+            <li className={styles.fromNow}>
+              <Icon name='pencil' />{' '}
+              {moment(post.create_time).fromNow()} in <a>javscript</a>
+            </li>
+            <li>
+              <a className={styles.vote} onClick={this.onLike.bind(this, post)}>
+                <Icon name={likeName} /> {post.like}
+              </a>
+            </li>
+            <li>
+              <a className={styles.vote} onClick={this.onDown.bind(this, post)}>
+                <Icon name={downName} /> {post.down}
+              </a>
+            </li>
+          </ul>
         </div>
-        {post.content && (
-          <div className={'row ' + styles.detailView}>
-            <MarkdownView content={post.content}/>
-          </div>
-        )}
+        <div className='four columns'>
+          <ul className='innerList'>
+            <li>
+              <img src={post.author.avatarUrl} alt='' className={styles.authorHead} />
+              <p className={styles.authorName}>{post.author.nickname}</p>
+              {this.props.user._id !== post.author._id && <FollowUser className={'radius ' + styles.markPost} userInfo={post.author} />}
+            </li>
+            <li className={styles.postInfo}>
+              <span className={styles.postInfoNum}>
+                <span className={styles.postMarkNum}>0</span>收藏,
+                <span className={styles.viewNum}> {post.views}</span>浏览
+              </span>
+              <button className={'radius ' + styles.markPost}>收藏</button>
+            </li>
+          </ul>
+        </div>
       </div>
     )
   }
-  renderContent () {
-    return (
-      <div>
-        {this.renderPost()}
-        <div className={'row ' + styles.commentView}>
-          <WriteComment user={this.props.user} post={this.props.post} isLogind={this.props.isLogind} />
-          <CommentsListView />
+  renderPost () {
+    const post = this.props.post
+    if (this.props.loading) {
+      return (
+        <div>
+          loading
         </div>
+      )
+    }
+    return (
+      <div className={'row ' + styles.detailView}>
+        <MarkdownView content={post.content} style={{paddingTop: '0'}} />
       </div>
     )
   }
@@ -167,7 +164,16 @@ class PostContainer extends Component {
     return (
       <div>
         <Helmet title={this.props.post.title}/>
-        {this.renderContent()}
+        <div style={{background: '#fff'}}>
+          {this.renderHeader()}
+          {this.renderPost()}
+        </div>
+        <div>
+          <div className={'row ' + styles.commentView}>
+            <WriteComment user={this.props.user} post={this.props.post} isLogind={this.props.isLogind} />
+            <CommentsListView />
+          </div>
+        </div>
       </div>
     )
   }

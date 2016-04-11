@@ -4,7 +4,8 @@ import {
   LOGIN,
   LOGOUT,
   FOLLOW,
-  UNFOLLOW
+  UNFOLLOW,
+  LOAD_
 } from 'redux/constants/user'
 import { handleActions } from 'redux-actions'
 
@@ -13,7 +14,8 @@ const initialState = Immutable.fromJS({
   login_message: '',
   logind: false,
   user: {},
-  token: ''
+  token: '',
+  similar: []
 })
 
 export default handleActions({
@@ -40,5 +42,8 @@ export default handleActions({
     const { follow_id } = payload
     const index = state.getIn(['user', 'following']).findIndex(_id => _id === follow_id)
     return state.setIn(['user', 'following'], Immutable.List(state.getIn(['user', 'following'])).delete(index))
+  },
+  ['LOAD_SIMILAR_SUCCESS']: (state, { users }) => {
+    return state.set('similar', Immutable.List(users))
   }
 }, initialState)
