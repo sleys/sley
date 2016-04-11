@@ -68,6 +68,7 @@
     "react-headrooms": "^1.0.1",
     "react-helmet": "^2.3.1",
     "react-icons": "^1.0.3",
+    "react-lite": "^0.15.7",
     "react-modal": "^0.6.1",
     "react-pure-render": "^1.0.2",
     "react-redux": "^4.0.0",

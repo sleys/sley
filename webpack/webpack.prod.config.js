@@ -54,6 +54,10 @@ module.exports = {
     })
   ],
   resolve: {
+    alias: {
+      'react': 'react-lite',
+      'react-dom': 'react-lite'
+    },
     modulesDirectories: [
       'shared',
       'node_modules'
