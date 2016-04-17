@@ -1,29 +1,19 @@
-.bg {
-  background: #e6e6e6;
-  height: 100%;
-}
 .writeContainer {
-  margin: 70px auto;
-  padding: 20px
-}
-.writeContainerFull{
   margin-top: 50px;
+  padding: 20px;
+  overflow: hidden;
 }
 .wirteButton {
   background: #FFF;
-  top: 70px;
+  top: 0px;
   min-height: 50px;
   width: 100%;
   z-index: 100;
   border-bottom: 1px solid #ECE8E8;
   transition: all .3s ease-in-out;
-  position: relative;
+  position: fixed;
   height: 50px;
   box-sizing: border-box;
-}
-.writeButtonFull {
-  top: 0;
-  position: fixed;
 }
 .ctrl {
   font-size: 14px;
@@ -75,9 +65,6 @@
   font-size: 16px;
   font-weight: 400;
   color: #546e7a;
-}
-.textareaContentFull {
-  width: 100%;
 }
 .titleWrap {
   background: #fff;

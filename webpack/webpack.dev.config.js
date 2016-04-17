@@ -8,7 +8,7 @@ const projectPath = path.resolve(__dirname, '../')
 const assestPath = path.resolve(projectPath, './static/dist')
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: 'cheap-module-eval-source-map',
   target: 'web',
   debug: true,
   progress: true,
@@ -39,10 +39,10 @@ module.exports = {
     })
   ],
   resolve: {
-    alias: {
-      'react': 'react-lite',
-      'react-dom': 'react-lite'
-    },
+    // alias: {
+    //   'react': 'react-lite',
+    //   'react-dom': 'react-lite'
+    // },
     modulesDirectories: [
       'shared',
       'node_modules'

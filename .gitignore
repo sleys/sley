@@ -1,6 +1,7 @@
 .idea
 .DS_Store
 .tern-project
+.vscode/
 *.log
 *.sublime-project
 *.sublime-workspace

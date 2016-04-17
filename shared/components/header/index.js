@@ -21,6 +21,8 @@ class Header extends Component {
     super(props)
   }
   render () {
+    const showHeader = _.include(['/write'], this.props.pathname)
+    const showAuthCtrl = !_.include(['/login', '/register', '/forgot'], this.props.pathname)
     const UserAction = (props) => {
       return (
         <ul className={styles.userAction}>
@@ -58,7 +60,7 @@ class Header extends Component {
             <UserAction user={this.props.user} logout={this.props.logout} />
           </Dropdown>
         </li>
-    ) : !_.include(['/login', '/register', '/forgot'], this.props.pathname) && (
+    ) : showAuthCtrl && (
       <div className={styles.authAction}>
         <a href='javscript:void(0)' onClick={this.props.showLoginModal} >登录</a>
         <small> | </small>
@@ -83,15 +85,17 @@ class Header extends Component {
         </div>
       </header>
     )
-    return this.props.showHeader ? (
+    console.log(this.props.pathname)
+    if (showHeader) return <div />
+    return (
       <Headroom tolerance={5} offset={100} classes={{
         initial: 'animated',
-        pinned: this.props.pathname !== 'write' ? 'slideInDown' : '',
-        unpinned: this.props.pathname !== 'write' ? 'slideOutUp' : ''
+        pinned: 'slideInDown',
+        unpinned: 'slideOutUp'
       }}>
         {header}
       </Headroom>
-    ) : <div />
+    )
   }
 }
 
@@ -100,7 +104,6 @@ Header.propTypes = {
   logind: Types.bool.isRequired,
   logout: Types.func.isRequired,
   user: Types.object.isRequired,
-  showHeader: Types.bool.isRequired,
   showLoginModal: Types.func.isRequired,
   pathname: Types.string.isRequired
 }
@@ -111,7 +114,6 @@ const select = state => {
     user: authState.get('user').toJS(),
     logind: authState.get('logind'),
     loading: authState.get('loading'),
-    showHeader: state.getIn(['GlobalStore', 'showHeader']),
     pathname: state.get('routing').locationBeforeTransitions.pathname
   }
 }

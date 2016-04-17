@@ -48,7 +48,7 @@ class WritePost extends Component {
   render () {
     return (
       <div className={'u-max-full-width ' + styles.container}>
-        <Link to='write'>
+        <Link to='/write'>
           <div className={styles.create}>
             <div className={styles.createIcon} onClick={this.showCreate}>
               <Icon name='pencil-square-o'/>

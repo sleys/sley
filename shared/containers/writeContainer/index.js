@@ -3,16 +3,12 @@ import React, { Component, PropTypes as Types } from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import Icon from 'react-fa'
-import { bindActionCreators } from 'redux'
+import { Link } from 'react-router'
 import Textarea from 'react-textarea-autosize'
 import cls from 'classnames'
 import {
   newPost
 } from 'redux/actions/posts'
-import {
-  showHeader,
-  hideHeader
-} from 'redux/actions/global'
 import styles from './index.scss'
 
 class WriteContainer extends Component {
@@ -24,12 +20,10 @@ class WriteContainer extends Component {
         content: ''
       },
       createIng: false,
-      full: false,
       old: false,
       saveing: false
     }
     this.interval = null
-    this.full = this.full.bind(this)
     this.addTag = this.addTag.bind(this)
     this.createNewPost = this.createNewPost.bind(this)
     this.onTitleChange = this.onTitleChange.bind(this)
@@ -145,47 +139,29 @@ class WriteContainer extends Component {
       })
     }
   }
-  full () {
-    const isFull = this.state.full
-    if (isFull) {
-      this.props.hideHeader()
-      this.setState({
-        full: false
-      })
-    } else {
-      this.props.showHeader()
-      this.setState({
-        full: true
-      })
-    }
-  }
   render () {
     const titleClass = cls({
       'auto-size': true,
-      [styles.textareaTitle]: true,
-      [styles.textareaTitleFull]: this.state.full
+      [styles.textareaTitle]: true
     })
     const contentClass = cls({
       'auto-size': true,
-      [styles.textareaContent]: true,
-      [styles.textareaContentFull]: this.state.full
+      [styles.textareaContent]: true
     })
     const writeContainer = cls({
-      [styles.writeContainer]: true,
-      [styles.writeContainerFull]: this.state.full
+      [styles.writeContainer]: true
     })
     const wb = cls({
-      [styles.wirteButton]: true,
-      [styles.writeButtonFull]: this.state.full
+      [styles.wirteButton]: true
     })
     return (
-      <div className={styles.bg}>
+      <div>
         <Helmet title='Write'/>
         <div className={wb}>
           <div className='column'>
-            <a className={styles.ctrl} onClick={this.full}>
-              <Icon name={this.state.full ? 'compress' : 'expand'}/>
-            </a>
+            <Link to='/' className={styles.ctrl}>
+              Home
+            </Link>
             <a className={styles.ctrl}>
               <Icon name='file-o' />{' '}
               <span className={styles.words}>
@@ -230,8 +206,6 @@ class WriteContainer extends Component {
 WriteContainer.propTypes = {
   user: Types.object.isRequired,
   dispatch: Types.func.isRequired,
-  showHeader: Types.func.isRequired,
-  hideHeader: Types.func.isRequired,
   newPost: Types.func.isRequired
 }
 
@@ -240,12 +214,7 @@ const select = state => {
     user: state.getIn(['UserStore', 'user']).toJS()
   }
 }
-const mapDispatchToState = dispatch => {
-  return {
-    dispatch,
-    showHeader: bindActionCreators(showHeader, dispatch),
-    hideHeader: bindActionCreators(hideHeader, dispatch),
-    newPost: bindActionCreators(newPost, dispatch)
-  }
+const mapDispatchToState = {
+  newPost
 }
 export default connect(select, mapDispatchToState)(WriteContainer)
