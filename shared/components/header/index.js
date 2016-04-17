@@ -16,84 +16,88 @@ import {
 import Dropdown from 'components/dropdown'
 import styles from './index.scss'
 
+const Search = (props) => {
+  return props.logind && (
+    <Link to='/search'>
+      <MdSearch />
+    </Link>
+  )
+}
+
+const Notification = (props) => {
+  return props.logind && (
+    <Link to='/notifications'>
+      <MdNotificationsNone />
+    </Link>
+  )
+}
+
+const Touxiang = (props) => {
+  return (
+    <Dropdown
+      trigger={
+        <img src={props.user.avatarUrl} className={styles.avatar} width='45' height='45' />
+      }
+      transitionName='fadeIn'
+    >
+      <ul className={styles.userAction}>
+        <li>
+          <Link to='/setting'>设置</Link>
+        </li>
+        <li>
+          <a href='javascript:void(0)' onClick={props.logout}><MdPerson />退出</a>
+        </li>
+      </ul>
+    </Dropdown>
+  )
+}
+
+Touxiang.propTypes = {
+  user: Types.object.isRequired,
+  logout: Types.func.isRequired
+}
+
 class Header extends Component {
   constructor (props) {
     super(props)
   }
   render () {
-    const showHeader = _.include(['/write'], this.props.pathname)
+    if (_.include(['/write'], this.props.pathname)) return null
     const showAuthCtrl = !_.include(['/login', '/register', '/forgot'], this.props.pathname)
-    const UserAction = (props) => {
-      return (
-        <ul className={styles.userAction}>
-          <li>
-            <Link to='/setting'>设置</Link>
-          </li>
-          <li>
-            <a href='javascript:void(0)' onClick={props.logout}><MdPerson />退出</a>
-          </li>
-        </ul>
-      )
-    }
-    const search = this.props.logind ? (
-      <li>
-        <Link to='/search'>
-          <MdSearch />
-        </Link>
-      </li>
-    ) : null
-    const notification = this.props.logind ? (
-      <li>
-        <Link to='/notifications'>
-          <MdNotificationsNone />
-        </Link>
-      </li>
-    ) : null
-    const touxiang = this.props.logind ? (
-        <li>
-          <Dropdown
-            trigger={
-              <img src={this.props.user.avatarUrl} className={styles.avatar} width='45' height='45' />
-            }
-            transitionName='fadeIn'
-          >
-            <UserAction user={this.props.user} logout={this.props.logout} />
-          </Dropdown>
-        </li>
-    ) : showAuthCtrl && (
-      <div className={styles.authAction}>
-        <a href='javscript:void(0)' onClick={this.props.showLoginModal} >登录</a>
-        <small> | </small>
-        <Link to='/register'>注册</Link>
-      </div>
-    )
-    const header = (
-      <header className={styles.header}>
-        <div className={styles.headerWarp}>
-          <div className='row'>
-            <div className='three columns'>
-              <Link to='/' className={styles.logo}>Sley</Link>{ /* <img src='' alt='' /> */}
-            </div>
-            <div className='nine columns'>
-              <ul className={styles.headerList}>
-                {search}
-                {notification}
-                {touxiang}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </header>
-    )
-    console.log(this.props.pathname)
-    if (showHeader) return <div />
     return (
       <Headroom tolerance={5} offset={100} classes={{
         initial: 'animated',
         pinned: 'slideInDown',
         unpinned: 'slideOutUp'
       }}>
-        {header}
+        <header className={styles.header}>
+          <div className={styles.headerWarp}>
+            <div className='row'>
+              <div className='three columns'>
+                <Link to='/' className={styles.logo}>Sley</Link>{ /* <img src='' alt='' /> */}
+              </div>
+              <div className='nine columns'>
+                <ul className={styles.headerList}>
+                  <li>
+                    <Search logind={this.props.logind} />
+                  </li>
+                  <li>
+                    <Notification logind={this.props.logind} />
+                  </li>
+                  <li>
+                    {this.props.logind ? <Touxiang user={this.props.user} logout={this.props.logout} /> : showAuthCtrl && (
+                      <div className={styles.authAction}>
+                        <a href='javscript:void(0)' onClick={this.props.showLoginModal} >登录</a>
+                        <small> | </small>
+                        <Link to='/register'>注册</Link>
+                      </div>
+                    )}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </header>
       </Headroom>
     )
   }
@@ -118,11 +122,9 @@ const select = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logout: bindActionCreators(logout, dispatch),
-    showLoginModal: bindActionCreators(showLoginModal, dispatch)
-  }
+const mapDispatchToProps = {
+  logout,
+  showLoginModal
 }
 
 export default connect(select, mapDispatchToProps)(Header)
