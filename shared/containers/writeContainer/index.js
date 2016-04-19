@@ -2,7 +2,8 @@ import _ from 'lodash'
 import React, { Component, PropTypes as Types } from 'react'
 import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
-import Icon from 'react-fa'
+import MdInsertDriveFile from 'react-icons/lib/md/insert-drive-file'
+import MdHome from 'react-icons/lib/md/home'
 import { Link } from 'react-router'
 import Textarea from 'react-textarea-autosize'
 import cls from 'classnames'
@@ -160,10 +161,10 @@ class WriteContainer extends Component {
         <div className={wb}>
           <div className='column'>
             <Link to='/' className={styles.ctrl}>
-              Home
+              <MdHome />
             </Link>
             <a className={styles.ctrl}>
-              <Icon name='file-o' />{' '}
+              <MdInsertDriveFile />{' '}
               <span className={styles.words}>
                 {this.state.write.content && this.state.write.content.length}
               </span>
@@ -178,10 +179,10 @@ class WriteContainer extends Component {
           </div>
         </div>
         <div className={'container ' + writeContainer}>
-          <div className={styles.authorInfo}>
+          { /* <div className={styles.authorInfo}>
             <img className={styles.authorImg} src={this.props.user.avatarUrl} />
             <span>{this.props.user.nickname}</span>
-          </div>
+          </div> */}
           <div className={styles.titleWrap}>
             <Textarea className={titleClass}
                       placeholder='Title'
