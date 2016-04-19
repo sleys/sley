@@ -79,13 +79,6 @@ class PostContainer extends Component {
     }
   }
   renderHeader () {
-    if (this.props.loading) {
-      return (
-        <div>
-          loading
-        </div>
-      )
-    }
     const post = this.props.post
     const liked = _.includes(post.likes, this.props.user._id)
     const downd = _.includes(post.downs, this.props.user._id)
@@ -147,26 +140,20 @@ class PostContainer extends Component {
   }
   renderPost () {
     const post = this.props.post
-    if (this.props.loading) {
-      return (
-        <div>
-          loading
-        </div>
-      )
-    }
     return (
       <div className={'row ' + styles.detailView}>
-        <MarkdownView content={post.content} style={{paddingTop: '0'}} />
+        <MarkdownView content={post.content} style={{paddingTop: 0}} />
       </div>
     )
   }
   render () {
+    console.log(this.props.loading)
     return (
       <div>
         <Helmet title={this.props.post.title}/>
         <div style={{background: '#fff'}}>
-          {this.renderHeader()}
-          {this.renderPost()}
+          {this.props.loading ? 'loading' : this.renderHeader()}
+          {this.props.loading ? 'loading' : this.renderPost()}
         </div>
         <div>
           <div className={'row ' + styles.commentView}>

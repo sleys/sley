@@ -12,7 +12,7 @@ import {
 
 const initialState = Immutable.fromJS({
   post: {},
-  loading: false,
+  loading: true,
   comments: [],
   fetchCommnets: false
 })

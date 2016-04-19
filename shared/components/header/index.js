@@ -17,7 +17,7 @@ import Dropdown from 'components/dropdown'
 import styles from './index.scss'
 
 const Search = (props) => {
-  return props.logind && (
+  return (
     <Link to='/search'>
       <MdSearch />
     </Link>
@@ -25,7 +25,7 @@ const Search = (props) => {
 }
 
 const Notification = (props) => {
-  return props.logind && (
+  return (
     <Link to='/notifications'>
       <MdNotificationsNone />
     </Link>
@@ -79,10 +79,10 @@ class Header extends Component {
               <div className='nine columns'>
                 <ul className={styles.headerList}>
                   <li>
-                    <Search logind={this.props.logind} />
+                    { this.props.logind && <Search /> }
                   </li>
                   <li>
-                    <Notification logind={this.props.logind} />
+                    { this.props.logind && <Notification /> }
                   </li>
                   <li>
                     {this.props.logind ? <Touxiang user={this.props.user} logout={this.props.logout} /> : showAuthCtrl && (
