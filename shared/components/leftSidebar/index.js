@@ -9,7 +9,7 @@ class LeftSideBar extends Component {
       <div className='two columns'>
         <ul className={styles.listNav}>
           <li>
-            <Link to='/' onlyActiveOnIndex activeClassName={styles.navActive}>
+            <Link to='/feeds' onlyActiveOnIndex activeClassName={styles.navActive}>
               <Icon name='feed' /> My Feed
             </Link>
           </li>

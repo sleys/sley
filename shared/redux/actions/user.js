@@ -42,7 +42,7 @@ export const login = (data, done) => {
         expires
       })
       dispatch(loginAction.success(user, token))
-      dispatch(replace('/'))
+      dispatch(replace('/feeds'))
       done()
     }).catch(e => {
       dispatch(loginAction.failure(e))

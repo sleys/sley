@@ -3,15 +3,16 @@
   overflow: hidden;
   box-shadow: 0 0 4px #ccc;
   background: #fff;
+  margin-bottom: 150px;
 }
 .wirteButton {
   background: #FFF;
-  top: 0px;
   min-height: 50px;
   width: 100%;
   z-index: 100;
   border-bottom: 1px solid #ECE8E8;
   transition: all .3s ease-in-out;
+  top: 0px;
   position: fixed;
   height: 50px;
   box-sizing: border-box;
@@ -70,4 +71,31 @@
 .titleWrap {
   background: #fff;
   border-bottom: 2px solid #ccc;
+}
+.a {
+  padding: 20px;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  margin: 15px 0 0 -230px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.publishText {
+  color: #444;
+  margin-bottom: 0;
+  font-size: 18px;
+}
+.tags {
+  padding: 14px 0 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(0,0,0,.05);
+  font-size: 14px;
+  color: rgba(0,0,0,.6);
+}
+.tagInputBox {
+  min-height: 80px;
+}
+.renderTags {
+  min-height: 37px;
 }

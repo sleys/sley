@@ -21,12 +21,7 @@ class WelcomeContainer extends Component {
     }
   }
   started () {
-    if (this.props.isLogind) {
-      this.props.dispatch(push('/feed'))
-      return
-    } else {
-      this.props.dispatch(push('/login'))
-    }
+    this.props.dispatch(push('/login'))
   }
   render () {
     return (
@@ -87,7 +82,6 @@ WelcomeContainer.propTypes = {
   hotPost: Types.array.isRequired,
   hotUser: Types.array.isRequired,
   dispatch: Types.func.isRequired,
-  isLogind: Types.bool.isRequired,
   loaded: Types.bool
 }
 
@@ -95,8 +89,7 @@ const select = state => {
   return {
     hotPost: state.getIn(['HotStore', 'hotPost']).toArray(),
     hotUser: state.getIn(['HotStore', 'hotUser']).toArray(),
-    loaded: state.getIn(['HotStore', 'hotPost', 'loaded']),
-    isLogind: state.getIn(['UserStore', 'logind'])
+    loaded: state.getIn(['HotStore', 'hotPost', 'loaded'])
   }
 }
 const mapDispatchToProps = dispatch => {

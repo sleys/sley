@@ -178,9 +178,9 @@ class PostView extends Component {
         </div>
         <div className={'u-max-full-width ' + styles.footer}>
           <ul className={styles.postActions}>
-            <li>
-              # javascript
-            </li>
+            {post.tags.map((k, i) => {
+              return <li key={i} className={styles.tag}>#{k}</li>
+            })}
           </ul>
           <ul className={styles.postActions + ' ' + 'u-pull-right'}>
             {this.props.showLikeAndDown ? (

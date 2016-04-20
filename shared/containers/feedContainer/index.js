@@ -19,8 +19,6 @@ import PostView from 'components/postView'
 import Loading from 'components/loading'
 import styles from './index.scss'
 
-import WelcomeContainer from 'containers/welcomeContainer'
-
 @provideHooks({
   fetch: ({ dispatch, getState }) => {
     if (getState().getIn(['UserStore', 'logind'])) {
@@ -29,15 +27,12 @@ import WelcomeContainer from 'containers/welcomeContainer'
     }
   },
   defer: ({dispatch, getState}) => {
-    // feed 页面比较特殊，没有登录就显示welcome页面，所以只能单独做权限验证
-    if (getState().getIn(['UserStore', 'logind'])) {
-      // 如果没有加载过feed则请求
-      if (!getState().getIn(['PostStore', 'loaded'])) {
-        const { page } = getState().get('routing').locationBeforeTransitions.query
-        dispatch(loadMyFeed(page))
-      }
-      return dispatch(similarYou())
+    // 如果没有加载过feed则请求
+    if (!getState().getIn(['PostStore', 'loaded'])) {
+      const { page } = getState().get('routing').locationBeforeTransitions.query
+      dispatch(loadMyFeed(page))
     }
+    return dispatch(similarYou())
   }
 })
 class FeedContainer extends PureComponent {
@@ -46,7 +41,7 @@ class FeedContainer extends PureComponent {
       return this.props.posts.get('error')
     }
     if (this.props.data.length > 0) {
-      var enterAnimation = {
+      const enterAnimation = {
         animation: 'transition.slideLeftIn',
         delay: 150,
         stagger: 150,
@@ -56,7 +51,7 @@ class FeedContainer extends PureComponent {
           display: 'none'
         }
       }
-      var leaveAnimation = {
+      const leaveAnimation = {
         animation: 'transition.slideRightOut',
         stagger: 150,
         duration: 400
@@ -72,9 +67,6 @@ class FeedContainer extends PureComponent {
     }
   }
   render () {
-    if (!this.props.logind) {
-      return <WelcomeContainer />
-    }
     return (
       <div>
         <Helmet title='Home'/>

@@ -4,9 +4,16 @@ import Helmet from 'react-helmet'
 import { connect } from 'react-redux'
 import MdInsertDriveFile from 'react-icons/lib/md/insert-drive-file'
 import MdHome from 'react-icons/lib/md/home'
+import MdExpandMore from 'react-icons/lib/md/expand-more'
+import MdClose from 'react-icons/lib/md/close'
 import { Link } from 'react-router'
 import Textarea from 'react-textarea-autosize'
 import cls from 'classnames'
+import {
+  VelocityTransitionGroup
+} from 'velocity-react'
+import Dropdown from 'components/dropdown'
+import TagsInput from 'react-tagsinput'
 import {
   newPost
 } from 'redux/actions/posts'
@@ -16,80 +23,35 @@ class WriteContainer extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      write: {
-        title: '',
-        content: ''
-      },
+      title: '',
+      content: '',
+      tags: [],
       createIng: false,
       old: false,
       saveing: false
     }
     this.interval = null
-    this.addTag = this.addTag.bind(this)
     this.createNewPost = this.createNewPost.bind(this)
     this.onTitleChange = this.onTitleChange.bind(this)
     this.onContentChange = this.onContentChange.bind(this)
-  }
-  componentDidMount () {
-    // setTimeout(() => {
-    //   const write = JSON.parse(localStorage.getItem('post_save'))
-    //   if (!write) return
-    //   this.setState({
-    //     write: write,
-    //     old: true
-    //   }, () => {
-    //     setTimeout(() => {
-    //       this.setState({
-    //         old: false
-    //       })
-    //     }, 2000)
-    //   })
-    // }, 500)
-    // const saveing = (write) => {
-    //   console.log('save ing')
-    //   this.setState({
-    //     saveing: true
-    //   })
-    //   localStorage.setItem('post_save', JSON.stringify(write))
-    //   setTimeout(() => {
-    //     this.setState({
-    //       saveing: false
-    //     })
-    //   }, 500)
-    // }
-    // this.interval = setInterval(() => {
-    //   const { content, title } = this.state.write
-    //   if (!content || !title) return
-    //   const write = JSON.parse(localStorage.getItem('post_save'))
-    //   if (write) {
-    //     if (title !== write.title || content !== write.content) {
-    //       saveing({
-    //         content,
-    //         title
-    //       })
-    //     }
-    //   } else {
-    //     saveing({
-    //       content,
-    //       title
-    //     })
-    //   }
-    // }, 5000)
+    this.onTagChange = this.onTagChange.bind(this)
   }
   componentWillUnmount () {
     clearInterval(this.interval)
   }
-  addTag () {
-
+  onTagChange (tag) {
+    this.setState({
+      tags: tag
+    })
   }
   createNewPost () {
     this.setState({
       createIng: true
     })
     const post = {
-      ...this.state.write,
-      title: _.trim(this.state.write.title),
-      content: _.trim(this.state.write.content)
+      title: _.trim(this.state.title),
+      content: _.trim(this.state.content),
+      tags: this.state.tags
     }
     this.props.newPost(post, (e) => {
       if (!e) {
@@ -106,17 +68,11 @@ class WriteContainer extends Component {
     if (value.length > maxLen) {
       const d = value.slice(0, maxLen)
       this.setState({
-        write: {
-          ...this.state.write,
-          title: d
-        }
+        title: d
       })
     } else {
       this.setState({
-        write: {
-          ...this.state.write,
-          title: value
-        }
+        title: value
       })
     }
   }
@@ -126,17 +82,11 @@ class WriteContainer extends Component {
     if (value.length > maxLen) {
       const d = value.slice(0, maxLen)
       this.setState({
-        write: {
-          ...this.state.write,
-          content: d
-        }
+        content: d
       })
     } else {
       this.setState({
-        write: {
-          ...this.state.write,
-          content: value
-        }
+        content: value
       })
     }
   }
@@ -152,21 +102,32 @@ class WriteContainer extends Component {
     const writeContainer = cls({
       [styles.writeContainer]: true
     })
-    const wb = cls({
-      [styles.wirteButton]: true
-    })
+    const enterAnimation = {
+      animation: 'transition.slideLeftIn',
+      delay: 150,
+      stagger: 150,
+      duration: 400,
+      style: {
+        display: 'none'
+      }
+    }
+    const leaveAnimation = {
+      animation: 'transition.slideRightOut',
+      stagger: 150,
+      duration: 400
+    }
     return (
       <div>
         <Helmet title='Write'/>
-        <div className={wb}>
-          <div className='column'>
+        <div className={styles.wirteButton}>
+          <div className='row' style={{margin: '0 auto'}}>
             <Link to='/' className={styles.ctrl}>
               <MdHome />
             </Link>
             <a className={styles.ctrl}>
               <MdInsertDriveFile />{' '}
               <span className={styles.words}>
-                {this.state.write.content && this.state.write.content.length}
+                {this.state.content && this.state.content.length}
               </span>
             </a>
             <a className={styles.ctrl}>
@@ -174,8 +135,67 @@ class WriteContainer extends Component {
               {this.state.old ? '继续上次未完成的内容' : null}
               {this.state.createIng ? '创建中' : ''}
             </a>
-            <a className={'button button-primary ' + styles.ctrlBtn} style={{marginRight: '30px'}}>存为草稿</a>
-            <a className={'button button-primary ' + styles.ctrlBtn} onClick={this.createNewPost}>发布</a>
+            <Dropdown className='u-pull-right' trigger={<span className={'primary ' + styles.ctrl} >发布 <MdExpandMore /></span>}>
+              <div className={styles.a}>
+                <p className={styles.publishText}>
+                  准备发布？
+                </p>
+                <div className={styles.tags}>
+                  添加标签（最多五个）标识你的文章，让更多人看到：
+                  <div className={styles.tagInputBox}>
+                    <TagsInput value={this.state.tags}
+                               onChange={this.onTagChange}
+                               onlyUnique
+                               maxTags={5}
+                               renderTag={(props) => {
+                                 let {tag, key, onRemove, ...other} = props
+                                 return (
+                                   <span key={key} {...other}>
+                                     {tag}
+                                     {'  '}
+                                     <MdClose onClick={(e) => {
+                                       e.stopPropagation()
+                                       onRemove(key)
+                                     }} />
+                                   </span>
+                                 )
+                               }}
+                               renderInput={(props) => {
+                                 let {onChange, value, ...other} = props
+                                 return (
+                                   <input type='text'
+                                          onChange={onChange}
+                                          value={value}
+                                          autoFocus
+                                          disabled={this.state.tags.length === 5}
+                                          placeholder='Add a tag...' {...other} />
+                                 )
+                               }}
+                               renderLayout={(tagComponents, inputComponent) => {
+                                 return (
+                                    <div>
+                                      <div className={styles.renderTags}>
+                                        <VelocityTransitionGroup enter={enterAnimation} leave={leaveAnimation}>
+                                          {tagComponents}
+                                        </VelocityTransitionGroup>
+                                      </div>
+                                      {inputComponent}
+                                    </div>
+                                  )
+                               }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <button className='radius'>
+                    存为草稿
+                  </button>
+                  <button className='radius u-pull-right primary' onClick={this.createNewPost} disabled={this.createIng}>
+                    发布
+                  </button>
+                </div>
+              </div>
+            </Dropdown>
           </div>
         </div>
         <div className={'container ' + writeContainer}>
@@ -188,14 +208,14 @@ class WriteContainer extends Component {
                       placeholder='Title'
                       useCacheForDOMMeasurements
                       style={{maxHeight: 260}}
-                      value={this.state.write.title}
+                      value={this.state.title}
                       onChange={this.onTitleChange}/>
           </div>
           <div>
             <Textarea className={contentClass}
                       useCacheForDOMMeasurements
                       placeholder='Say you want to say'
-                      value={this.state.write.content}
+                      value={this.state.content}
                       onChange={this.onContentChange}/>
           </div>
         </div>

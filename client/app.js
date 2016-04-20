@@ -17,7 +17,11 @@ const routes = createRoutes(store)
 
 history.listen(location => {
   (async () => {
-    const { renderProps } = await matchLocation(routes, location)
+    const { renderProps } = await matchLocation(routes, location.pathname)
+
+    // 我也不知道为什么会这样
+    if (typeof renderProps === 'undefined') return
+
     // Get array of route handler components:
     const { components } = renderProps
 

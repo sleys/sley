@@ -2,17 +2,23 @@ import React from 'react'
 import { match, Route, IndexRoute } from 'react-router'
 import { UserAuthWrapper } from 'redux-auth-wrapper'
 import { push } from 'react-router-redux'
+
 // wrapper
 import rootContainer from 'containers/rootContainer'
 import appContainer from 'containers/appContainer'
+
+// Index
+import welcomeContainer from 'containers/welcomeContainer'
+
 // login and register
 import loginContainer from 'containers/loginContainer'
 import forgotPassContainer from 'containers/forgotPassContainer'
 import registerContainer from 'containers/registerContainer'
 import registerActiveContainer from 'containers/registerActiveContainer'
-import feedContainer from 'containers/feedContainer'
+
 
 // required auth
+import feedContainer from 'containers/feedContainer'
 import settingContainer from 'containers/settingContainer'
 import writeContainer from 'containers/writeContainer'
 import notificationContainer from 'containers/notificationContainer'
@@ -27,6 +33,7 @@ import collectionsContainer from 'containers/feedContainer'
 import nodesContainer from 'containers/nodesContainer'
 import nodePostsContainer from 'containers/nodePostsContainer'
 import exploreContainer from 'containers/feedContainer'
+
 // not found
 import notFoundConainer from 'containers/notFoundConainer'
 
@@ -54,10 +61,15 @@ export default (store) => {
   const connect = (fn) => (nextState, replaceState) => fn(store, nextState, replaceState)
   const routes = (
     <Route path='/' component={rootContainer}>
-      <IndexRoute component={feedContainer} />
+      <IndexRoute component={welcomeContainer} onEnter={(nextState, replaceState, next) => {
+        const isLogind = store.getState().getIn(['UserStore', 'logind'])
+        if (isLogind) replaceState('/feeds')
+        next()
+      }}/>
 
       <Route component={requireAuthentication(appContainer)}
              onEnter={connect(requireAuthentication.onEnter)}>
+        <Route path='feeds' component={feedContainer} />
         <Route path='write' component={writeContainer} />
         <Route path='notifications' component={notificationContainer} />
         <Route path='setting' component={settingContainer} />

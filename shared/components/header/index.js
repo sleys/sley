@@ -62,14 +62,19 @@ class Header extends Component {
     super(props)
   }
   render () {
+    // write页面不显示header
     if (_.include(['/write'], this.props.pathname)) return null
     const showAuthCtrl = !_.include(['/login', '/register', '/forgot'], this.props.pathname)
     return (
-      <Headroom tolerance={5} offset={100} classes={{
-        initial: 'animated',
-        pinned: 'slideInDown',
-        unpinned: 'slideOutUp'
-      }}>
+      <Headroom tolerance={5}
+                offset={100}
+                classes={{
+                  initial: 'animated',
+                  pinned: 'slideInDown',
+                  unpinned: 'slideOutUp'
+                }}
+                disable={() => _.includes(['/'], this.props.pathname)}
+      >
         <header className={styles.header}>
           <div className={styles.headerWarp}>
             <div className='row'>

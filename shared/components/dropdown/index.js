@@ -4,15 +4,14 @@ import SimpleDropdown, { DropdownTrigger, DropdownContent } from 'react-simple-d
 
 class Dropdown extends Component {
   render () {
+    const {trigger, children, ...other} = this.props
     return (
-      <SimpleDropdown {...this.props}>
+      <SimpleDropdown {...other}>
         <DropdownTrigger>
-          {this.props.trigger}
+          {trigger}
         </DropdownTrigger>
-        <DropdownContent>
-          <div className={'animated ' + this.props.transitionName}>
-            {this.props.children}
-          </div>
+        <DropdownContent className={'animated ' + this.props.transitionName}>
+            {children}
         </DropdownContent>
       </SimpleDropdown>
     )
@@ -21,7 +20,7 @@ class Dropdown extends Component {
 Dropdown.propTypes = {
   trigger: Types.element.isRequired,
   transitionName: Types.string,
-  children: Types.element.isRequired
+  children: Types.any.isRequired
 }
 Dropdown.defaultProps = {
   transitionName: 'fadeIn'
